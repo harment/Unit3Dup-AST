@@ -36,15 +36,16 @@ class Myhttp:
 
         self.data = {
             "name": "TEST.torrent",
-            "description": "",  # mandatory
+            "description": "", 
             "mediainfo": "",
             "bdinfo": " ",
-            "type_id": "1",
-            "resolution_id": 10,  # mandatory
-            "tmdb": "",  # mandatory
+            "type_id": "1",          # القيمة الافتراضية
+            "resolution_id": "10",   # القيمة الافتراضية
+            "category_id": "4",      # الحقل الأهم الذي طورنا الكود لأجله
+            "tmdb": "",  
             "imdb": "0",
             "tvdb": "0",
-            "mal": "0",  # no ancora implementato
+            "mal": "0",  
             "igdb": "0",
             "anonymous": 0,
             "stream": "0",
