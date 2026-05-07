@@ -1,8 +1,5 @@
 # 🚀 Unit3Dup-AST | نسخة فريق المصدر العربي المطورة
 
-[![Version](https://shields.io)](https://github.com)
-[![Python](https://shields.io)](https://python.org)
-[![Status](https://shields.io)](https://github.com)
 
 **أداة الرفع الآلي وتوليد التورنت المخصصة لفريق AST وتراكر UNIT3D.**
 
@@ -24,12 +21,12 @@
 للأعضاء الجدد، استخدم الأمر التالي في **PowerShell** أو **Terminal**:
 
 ```bash
-pip install git+https://github.com.git
+pip install git+https://github.com/harment/Unit3Dup-AST.git
 ```
 
 للترقية والحصول على آخر التحديثات:
 ```bash
-pip install git+https://github.com.git --upgrade
+pip install git+https://github.com/harment/Unit3Dup-AST.git --upgrade
 ```
 
 ---
@@ -60,8 +57,7 @@ sudo apt install ffmpeg poppler-utils
 
 ## 🔗 روابط مهمة
 *   **التراكر المدعوم:** [Arabic Source Team (AST)](https://arabicsource.net)
-*   **المشروع الأصلي:** [Unit3Dup](https://github.com)
-
+*   **المشروع الأصلي:** [Unit3Dup](https://github.com/31December99/Unit3Dup)
 ---
 
 ### 👨‍💻 المساهمة والتواصل
