@@ -24,40 +24,44 @@ class VideoManager:
         self.tags_list = tags_list
 
     def clean_title_for_search(self, raw_title: str) -> str:
-        # 1. تحويل الاسم لنص وتغيير النقاط لمسافات فوراً لحماية الكلمات مثل .us
-        # لا نستخدم splitext هنا لأننا نتعامل مع أسماء مجلدات غالباً
-        t = os.path.basename(raw_title)
-        t = t.replace('.', ' ').replace('-', ' ').replace('_', ' ')
+        # 1. الحصول على الاسم وتحويله لحروف صغيرة
+        t = os.path.basename(raw_title).lower()
+        
+        # 2. إزالة الامتدادات
+        for ext in ['.mkv', '.mp4', '.avi', '.ts', '.mov']:
+            if t.endswith(ext): t = t[:-len(ext)]
 
-        # 2. استخراج السنة
-        year_match = re.search(r'\b(19|20)\d{2}\b', t)
-        year = year_match.group(0) if year_match else ""
-        if year:
-            t = t.replace(year, ' ')
+        # 3. حذف السنة نهائياً من نص البحث (لأن TMDB يفضل ذلك)
+        t = re.sub(r'\b(19|20)\d{2}\b', ' ', t)
 
-        # 3. قائمة القمامة التقنية والعربية (التي نريد حذفها فعلاً)
-        junk = [
-            r'\bWEB-?DL\b', r'\b2160p\b', r'\b1080p\b', r'\b720p\b', r'\bHEVC\b', 
-            r'\bx26[45]\b', r'\bH\.?26[45]\b', r'\b10BIT\b', r'\bAAC\b', r'\bREPACK\b', 
-            r'\bREMUX\b', r'\bBluray\b', r'\bAST\b', r'\bROSUM\b', r'\bAOC\b',
-            r'\bNF\b', r'\bDSNP\b', r'\bAMZN\b', r'حصريا?', r'نادر', r'لأول\s?مرة', r'حصري?',
-            r'\bArabic\b', r'\bTranslated\b', r'\bBBC\b', r'\bDrMansoob\b' 
+        # 4. استبدال كل الرموز بمسافات
+        t = re.sub(r'[\.\-\_\[\]\(\)\+\!\@\#\$\%\^\&\*]', ' ', t)
+
+        # 5. قائمة القمامة
+        junk_list = [
+            r'\bweb\s?dl\b', r'\b2160p\b', r'\b1080p\b', r'\b720p\b', r'\b480p\b',
+            r'\bhevc\b', r'\bx26\d\b', r'\bh26\d\b', r'\b10bit\b', r'\baac\b',
+            r'\brepack\b', r'\bproper\b', r'\bremux\b', r'\bbluray\b', r'\bdual\b', 
+            r'\baudio\b', r'\bmulti\b', r'\bast\b', r'\brosum\b', r'\baoc\b',
+            r'\bby\b', r'\bdrmansoob\b', r'\btranslated\b', r'\barabic\b', r'\bdsnp\b',
+            r'\bamzn\b', r'\bnf\b', r'\bhdr\d*\b', r'\bdv\b'
         ]
         
-        for pattern in junk:
+        for pattern in junk_list:
             t = re.sub(pattern, ' ', t, flags=re.IGNORECASE)
 
-        # 4. تنظيف الرموز المتبقية
-        t = re.sub(r'[\[\]\(\)\+\!\@\#\$\%\^\&\*]', ' ', t)
-
-        # 5. الدمج النهائي (الحفاظ على كل الكلمات مهما كان طولها)
-        final_query = ' '.join(t.split())
+        # 6. تجميع الكلمات (الحفاظ على الأرقام مثل 3)
+        words = t.split()
+        cleaned_words = []
+        for w in words:
+            if len(w) >= 2 or w.isdigit() or w in ['a', 'i']:
+                if w not in ['by', 'dl', 'web']:
+                    cleaned_words.append(w)
         
-        if year:
-            final_query = f"{final_query} {year}"
+        final_query = ' '.join(cleaned_words).strip().title()
 
-        custom_console.bot_log(f"DEBUG: Final Query to TMDB -> '{final_query.strip()}'")
-        return final_query.strip()
+        custom_console.bot_log(f"DEBUG: Final Query to TMDB -> '{final_query}'")
+        return final_query
 
 
     def get_custom_category(self, db_details, content, is_tv_show: bool) -> int:
@@ -160,13 +164,15 @@ class VideoManager:
             folder_name = content.torrent_name if content.torrent_name else ""
             folder_upper = folder_name.upper()
             
-            # 1. تحديد النوع (مع إضافة كلمات دلالية للمسلسلات الوثائقية)
-            tv_patterns = ["S0", "S1", "S2", "SEASON", "EPISODE", "EP0", "EP1", " EP", "PART", "HISTORY", "THE", "DECADE"]
+            # 1. تحديد النوع (Movie/TV) - استبعاد كلمة THE لضمان دقة الأفلام
+            tv_patterns = ["S0", "S1", "S2", "SEASON", "EPISODE", "EP0", "EP1", " EP", "PART", "HISTORY", "DECADE"]
             is_tv = any(p in file_upper for p in tv_patterns) or any(p in folder_upper for p in tv_patterns)
             content.category = "tv" if is_tv else "movie"
             
-            # 2. تنظيف العنوان (نستخدم المجلد لضمان وجود US و 80S)
-            content.guess_title = self.clean_title_for_search(folder_name if folder_name else content.guess_title)
+            # 2. تنظيف العنوان الابتدائي (يحتوي على السنة عادةً)
+            original_folder_name = folder_name if folder_name else content.guess_title
+            content.guess_title = self.clean_title_for_search(original_folder_name)
+            
             custom_console.bot_log(f"Detected: {content.category.upper()} | Search Query: '{content.guess_title}'")
 
             try:
@@ -175,28 +181,38 @@ class VideoManager:
                     os.makedirs(os.path.dirname(t_path), exist_ok=True)
                     t_res = UserContent.torrent(content, tracker_name_list, selected_tracker, t_path)
 
-                    # 3. محاولة البحث التلقائي (البحث المزدوج الإجباري)
+                    # --- استراتيجية البحث الذكي الثلاثي ---
                     search_res = None
-                    # جرب التصنيف الذي اكتشفه البوت أولاً
+                    
+                    # المحاولة 1: البحث بالعنوان كما هو (غالباً مع السنة)
                     db_search = DbOnline(media=content, category=content.category, no_title=self.cli.notitle)
                     search_res = db_search.media_result
                     
-                    # إذا فشل، جرب التصنيف الآخر فوراً
+                    # المحاولة 2: إذا فشل، جرب حذف السنة (لأجل سونيك 3 وأمثاله)
+                    if not search_res:
+                            clean_no_year = re.sub(r'\b(19|20)\d{2}\b', '', content.guess_title).strip()
+                            custom_console.bot_log(f"DEBUG: Trying secondary search -> {clean_no_year}") # أضف هذا السطر
+                            content.guess_title = clean_no_year
+                            db_search = DbOnline(media=content, category=content.category, no_title=self.cli.notitle)
+                            search_res = db_search.media_result
+
+                    # المحاولة 3: إذا فشل، جرب الفئة الأخرى (Movie <-> TV)
                     if not search_res:
                         alt_cat = "tv" if content.category == "movie" else "movie"
-                        custom_console.bot_warning_log(f"No result as {content.category}. Trying as {alt_cat.upper()}...")
-                        original_cat = content.category
+                        custom_console.bot_warning_log(f"Still no result. Retrying as {alt_cat.upper()}...")
+                        old_cat = content.category
                         content.category = alt_cat
                         db_search = DbOnline(media=content, category=content.category, no_title=self.cli.notitle)
                         search_res = db_search.media_result
                         if not search_res:
-                            content.category = original_cat # إعادة الحالة الأصلية إذا فشل الاثنان
+                            content.category = old_cat # إعادة الفئة الأصلية لو فشل تماماً
 
+                    # إذا فشل كل ما سبق
                     if not search_res:
                         custom_console.bot_error_log(f"Auto-match failed for: {content.guess_title}")
                         continue
-                    
-                    # 4. جلب البيانات وتحديد القسم النهائي
+
+                    # 4. جلب البيانات النهائية والتصنيف
                     tmdb_id = getattr(search_res, 'video_id', getattr(search_res, 'id', 0))
                     tmdb_api = TmdbAPI()
                     db_details_data = tmdb_api.details(video_id=tmdb_id, category=content.category)
@@ -205,6 +221,7 @@ class VideoManager:
                     content.custom_category_id = self.get_custom_category(db_details, content, (content.category == "tv"))
                     custom_console.bot_log(f"SUCCESS: {content.category.upper()} | ID: {tmdb_id} | CATEGORY: {content.custom_category_id}")
 
+                    # 5. بناء وصف الفيديو والرفع
                     video_info = Video(media=content, tmdb_id=tmdb_id, trailer_key=getattr(db_details, 'trailer_key', ''))
                     video_info.build_info()
 
@@ -214,7 +231,9 @@ class VideoManager:
 
                     tracker_res, tracker_msg = up_bot.send(t_path)
                     bittorrent_list.append(BittorrentData(tracker_res, t_res, content, tracker_msg, t_path))
+
             except Exception as e:
-                custom_console.bot_error_log(f"Error: {str(e)}")
+                custom_console.bot_error_log(f"Error processing '{content.file_name}': {str(e)}")
                 continue
+                
         return bittorrent_list
