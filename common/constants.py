@@ -10,6 +10,7 @@ language_dict = {
     "PT": "Portuguese",
     "JA": "Japanese",
     "BG": "Bulgarian",
+	"AR": "Arabic",
     "PL": "Polish"
 }
 
