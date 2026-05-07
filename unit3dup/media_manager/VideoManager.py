@@ -18,10 +18,12 @@ from view import custom_console
 
 class VideoManager:
 
-    def __init__(self, contents: list[Media], cli: Namespace, tags_list: dict):
+    def __init__(self, contents: list[Media], cli: Namespace, tags_list: dict, sign_list: dict, ban_list: dict):
         self.contents = contents
         self.cli = cli
         self.tags_list = tags_list
+        self.sign_list = sign_list  # تخزين القائمة لاستخدامها لاحقاً
+        self.ban_list = ban_list    # تخزين القائمة لاستخدامها لاحقاً
 
     def clean_title_for_search(self, raw_title: str) -> str:
         # 1. الحصول على الاسم وتحويله لحروف صغيرة
