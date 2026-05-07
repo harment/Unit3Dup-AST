@@ -63,7 +63,7 @@ pip install git+https://github.com/harment/Unit3Dup-AST.git --upgrade
 
 ### 3️⃣ تثبيت Poppler (لملفات الـ PDF فقط)
 إذا كنت تنوي رفع كتب أو وثائق بصيغة PDF لاستخراج الأغلفة تلقائياً:
-1. حمل الأداة من [هنا](https://poppler.freedesktop.org/).
+1. حمل الأداة من [هنا](https://github.com/oschwartz10612/poppler-windows/releases/)
 2. فك الضغط وأضف مجلد الـ `bin` الخاص بها إلى الـ **Path** بنفس طريقة FFmpeg (مثال: `C:\poppler\bin`).
 
 ---
