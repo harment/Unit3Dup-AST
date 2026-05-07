@@ -69,7 +69,8 @@ class ContentManager:
 
         # add category filter to the regex result caused by a possible substring (e.g., S06) in the whole path
         # and not part of the title
-        match = re.search(r"(S\d+(?!.*E\d+))|(S\d+E\d+-E?\d+)", self.path) if media.category == 'tv' else None
+        pattern = r"(S\d+(?!.*E\d+))|(S\d+E\d+-E?\d+)|(EP\d+)|(PART\s?\d+)"
+        match = re.search(pattern, self.path, re.IGNORECASE) if media.category == 'tv' else None
         pack = match.group() if match else None
         torrent_pack = bool(match)
 
