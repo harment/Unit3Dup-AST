@@ -25,8 +25,7 @@ class UploadBot:
         
         # توقيع فريق AST بتنسيق BBCode احترافي
         self.sign = (
-            f"\n\n[center][b][color=#FF0000]مع تحيات فريق المصدر العربي AST[/color][/b]\n"
-            f"[size=2][color=#808080]Uploaded with Unit3Dup {Load.version}[/color][/size][/center]")
+            f"\n\n[center][b][color=#FF0000]مع تحيات فريق المصدر العربي AST[/color][/b]\n")
 
     def message(self, tracker_response: requests.Response, torrent_archive: str):
         name_error = ''
