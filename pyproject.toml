@@ -4,19 +4,19 @@ build-backend = "setuptools.build_meta"
 
 [project]
 dynamic = ["dependencies"]
-name = "Unit3Dup"
-version = "0.11.5"
-description = "An uploader for the Unit3D torrent tracker"
+name = "Unit3Dup-AST"
+version = "1.0"
+description = "Custom Unit3D uploader for Arabic Source Team (AST)"
 readme = "README.rst"
 requires-python = ">=3.10"
 license = "MIT"
 
 authors = [
-    { name = "Parzival" }
+    { name = "harment" }
 ]
 
 [project.urls]
-Homepage = "https://github.com/31December99/Unit3Dup"
+Homepage = "https://github.com/harment/Unit3Dup-AST"
 
 
 [tool.setuptools.packages.find]
