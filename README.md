@@ -23,7 +23,7 @@
 ```bash
 pip install git+https://github.com/harment/Unit3Dup-AST.git
 ```
-
+- حمل وثبت البرنامج من [Git for Windows](https://git-scm.com).
 للترقية والحصول على آخر التحديثات:
 ```bash
 pip install git+https://github.com/harment/Unit3Dup-AST.git --upgrade
