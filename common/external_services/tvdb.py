@@ -6,7 +6,7 @@ from unit3dup import config_settings
 class TVDB:
 
     def __init__(self, category: str):
-        self.api = tvdb_v4_official.TVDB(config_settings.tracker_config.TVDB_APIKEY)
+        self.api = tvdb_v4_official.TVDB(config_settings.tracker_config.TVDB_APIKEY, pin="SXVUP0VA")
         self.category = category
         self.filtered_results = []
 
