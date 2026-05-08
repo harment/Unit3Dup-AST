@@ -51,8 +51,8 @@ class ImageUploader(ABC):
                 time.sleep(1)
         return None
 
-class ImgBB(ImageUploader):
-    priority = config_settings.user_preferences.IMGBB_PRIORITY
+class AstU(ImageUploader):
+    priority = config_settings.user_preferences.ASTU_PRIORITY
 
     def get_endpoint(self) -> str:
         # ملاحظة: تأكد من تغيير "user" إلى اسم المستخدم الحقيقي في مركز الرفع لديك
