@@ -84,6 +84,7 @@ class TrackerConfig(BaseModel):
     TVDB_APIKEY: str | None = None
     TVDB_PIN: str | None = None
     ASTU_KEY: str | None = None
+    ASTU_USERNAME: str | None = None
     FREE_IMAGE_KEY: str | None = None
     LENSDUMP_KEY: str | None = None
     PTSCREENS_KEY: str | None = None
@@ -597,6 +598,7 @@ class Load:
                 "TVDB_APIKEY": "no_key",
                 "TVDB_PIN": "no_key",
                 "ASTU_KEY": "no_key",
+                "ASTU_USERNAME": "user",
                 "FREE_IMAGE_KEY": "no_key",
                 "LENSDUMP_KEY": "no_key",
                 "PTSCREENS_KEY": "no_key",
@@ -792,6 +794,8 @@ class JsonConfig:
         if self.tracker_diff_keys:
             self.updated = True
             missing_keys_dict = {key: 'no_key' for key in self.tracker_diff_keys}
+            if 'ASTU_USERNAME' in missing_keys_dict:
+                missing_keys_dict['ASTU_USERNAME'] = 'user'
             self.tracker_config.update(missing_keys_dict)
 
     def update_torrent_client_config(self):
