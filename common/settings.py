@@ -83,7 +83,7 @@ class TrackerConfig(BaseModel):
     TMDB_APIKEY: str | None = None
     TVDB_APIKEY: str | None = None
     TVDB_PIN: str | None = None
-    IMGBB_KEY: str | None = None
+    ASTU_KEY: str | None = None
     FREE_IMAGE_KEY: str | None = None
     LENSDUMP_KEY: str | None = None
     PTSCREENS_KEY: str | None = None
@@ -119,7 +119,7 @@ class UserPreferences(BaseModel):
     PTSCREENS_PRIORITY: int = 0
     LENSDUMP_PRIORITY: int = 1
     FREE_IMAGE_PRIORITY: int = 2
-    IMGBB_PRIORITY: int = 3
+    ASTU_PRIORITY: int = 3
     IMGFI_PRIORITY: int = 4
     PASSIMA_PRIORITY: int = 5
     IMARIDE_PRIORITY: int = 6
