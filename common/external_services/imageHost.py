@@ -55,12 +55,11 @@ class AstU(ImageUploader):
     priority = config_settings.user_preferences.ASTU_PRIORITY
 
     def get_endpoint(self) -> str:
-        # ملاحظة: تأكد من تغيير "user" إلى اسم المستخدم الحقيقي في مركز الرفع لديك
-        user_name = "user" 
+        user_name = config_settings.tracker_config.ASTU_USERNAME
         return f"https://arabicsource.net/U/ajax/index.php?uploadfile&api={self.key}&username={user_name}"
 
     def get_data(self) -> dict:
-        user_name = "user"
+        user_name = config_settings.tracker_config.ASTU_USERNAME
         return {
             "api": self.key,
             "username": user_name,
