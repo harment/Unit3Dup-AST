@@ -101,7 +101,7 @@ class Build:
     def __init__(self, extracted_frames: list[bytes], filename: str):
         self.filename = filename
         self.extracted_frames = extracted_frames
-        self.ASTU_KEY = config_settings.tracker_config.ASYU_KEY
+        self.ASTU_KEY = config_settings.tracker_config.ASTU_KEY
 
     def description(self) -> str:
         # روابط الصور التجميلية الخاصة بك
