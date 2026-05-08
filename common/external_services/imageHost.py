@@ -86,7 +86,7 @@ class ImageUploaderFallback:
 
     @staticmethod
     def result(response: dict, uploader_host: str) -> str | None:
-        if uploader_host == "ImgBB":
+        if uploader_host == "AstU":
             if response.get("success"):
                 base_url = "https://arabicsource.net/U"
                 upload_dir = response.get('UploadDir', '/uploads')
@@ -101,7 +101,7 @@ class Build:
     def __init__(self, extracted_frames: list[bytes], filename: str):
         self.filename = filename
         self.extracted_frames = extracted_frames
-        self.IMGBB_KEY = config_settings.tracker_config.IMGBB_KEY
+        self.ASTU_KEY = config_settings.tracker_config.ASYU_KEY
 
     def description(self) -> str:
         # روابط الصور التجميلية الخاصة بك
@@ -122,7 +122,7 @@ class Build:
             _number += 1
             image_name = f"{self.filename}.id_{_number}"
             
-            uploader = ImgBB(img_bytes, self.IMGBB_KEY, image_name=image_name)
+            uploader = AstU(img_bytes, self.ASTU_KEY, image_name=image_name)
             fallback = ImageUploaderFallback(uploader)
             url = fallback.upload()
             
@@ -130,7 +130,7 @@ class Build:
                 description += f"[img=850]{url}[/img]\n"
         
         # 3. إضافة الزخرفة الختامية وإغلاق وسم المنتصف
-        description += f"\n[img=600]{footer_decoration}[/img]\n"
+        description += f"\n[img=500]{footer_decoration}[/img]\n"
         description += "[/center]"
         
         return description
