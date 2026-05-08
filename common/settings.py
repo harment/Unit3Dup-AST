@@ -592,7 +592,7 @@ class Load:
                 "AST_URL": "https://arabicsource.net",
                 "AST_APIKEY": "no_key",
                 "AST_PID": "no_key",
-                "MULTI_TRACKER": ["itt","sis","ptt","ast"],
+                "MULTI_TRACKER": ["ast"],
                 "TMDB_APIKEY": "no_key",
                 "TVDB_APIKEY": "no_key",
                 "TVDB_PIN": "no_key",
