@@ -15,7 +15,7 @@ Api_key per TheMovieDB e TvDb
 Il bot interroga questi due servizi per ottenere l'ID del vostro titolo e trasmetterlo al tracker
 
 
-#### IMGBB_KEY, FREE_IMAGE_KEY, LENSDUMP_KEY, PTSCREENS_KEY, IMGFI_KEY, PASSIMA_KEY, IMARIDE_KEY
+#### ASTU_KEY, FREE_IMAGE_KEY, LENSDUMP_KEY, PTSCREENS_KEY, IMGFI_KEY, PASSIMA_KEY, IMARIDE_KEY
 
 Nello scopo sono tutti uguali.
 Il bot dopo aver estratto uno o più screenshots li carica su uno questi host. 

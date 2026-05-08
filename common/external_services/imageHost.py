@@ -51,11 +51,11 @@ class ImageUploader(ABC):
                 time.sleep(1)
         return None
 
-class ImgBB(ImageUploader):
-    priority = config_settings.user_preferences.IMGBB_PRIORITY
+class Astu(ImageUploader):
+    priority = config_settings.user_preferences.ASTU_PRIORITY
 
     def get_endpoint(self) -> str:
-        # ملاحظة: تأكد من تغيير "user" إلى اسم المستخدم الحقيقي في مركز الرفع لديك
+        # ملاحظة: تأكد من تغيير "user" إلى اسم المستخدم الحقيقي في مركز رفع ASTU لديك
         user_name = "user" 
         return f"https://arabicsource.net/U/ajax/index.php?uploadfile&api={self.key}&username={user_name}"
 
@@ -86,7 +86,7 @@ class ImageUploaderFallback:
 
     @staticmethod
     def result(response: dict, uploader_host: str) -> str | None:
-        if uploader_host == "ImgBB":
+        if uploader_host == "Astu":
             if response.get("success"):
                 base_url = "https://arabicsource.net/U"
                 upload_dir = response.get('UploadDir', '/uploads')
@@ -101,7 +101,7 @@ class Build:
     def __init__(self, extracted_frames: list[bytes], filename: str):
         self.filename = filename
         self.extracted_frames = extracted_frames
-        self.IMGBB_KEY = config_settings.tracker_config.IMGBB_KEY
+        self.ASTU_KEY = config_settings.tracker_config.ASTU_KEY
 
     def description(self) -> str:
         # روابط الصور التجميلية الخاصة بك
@@ -122,7 +122,7 @@ class Build:
             _number += 1
             image_name = f"{self.filename}.id_{_number}"
             
-            uploader = ImgBB(img_bytes, self.IMGBB_KEY, image_name=image_name)
+            uploader = Astu(img_bytes, self.ASTU_KEY, image_name=image_name)
             fallback = ImageUploaderFallback(uploader)
             url = fallback.upload()
             
