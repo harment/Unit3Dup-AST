@@ -22,7 +22,10 @@ class UploadBot:
         self.tracker_data = TRACKData.load_from_module(tracker_name=tracker_name)
         self.tracker = Unit3d(tracker_name=tracker_name)
         self.sign = (
-            f"مع تحيات فريق المصدر العربي AST")
+            f"[center][i][color=#0a589d][size=14]"
+            f"مع تحيات فريق المصدر العربي AST"
+            f"[/size][/color][/i][/center]"
+        )
 
     def message(self, tracker_response: requests.Response, torrent_archive: str):
         name_error = ''
