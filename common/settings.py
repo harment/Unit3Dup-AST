@@ -479,7 +479,7 @@ class Config(BaseModel):
                 if field in ['TORRENT_COMMENT', 'WATCHER_PATH', 'DEFAULT_TRACKER']:
                     section[field] = Validate.string(value=section[field], field_name=field)
 
-                if field in ['NUMBER_OF_SCREENSHOTS', 'COMPRESS_SCSHOT', 'IMGBB_PRIORITY', 'FREE_IMAGE_PRIORITY',
+                if field in ['NUMBER_OF_SCREENSHOTS', 'COMPRESS_SCSHOT', 'ASTU_PRIORITY', 'FREE_IMAGE_PRIORITY',
                              'LENSDUMP_PRIORITY', 'PASSIMA_PRIORITY', 'IMARIDE_PRIORITY', 'WATCHER_INTERVAL', 'SIZE_TH',
                              'FAST_LOAD']:
                     section[field] = Validate.integer(value=section[field], field_name=field)
@@ -596,7 +596,7 @@ class Load:
                 "TMDB_APIKEY": "no_key",
                 "TVDB_APIKEY": "no_key",
                 "TVDB_PIN": "no_key",
-                "IMGBB_KEY": "no_key",
+                "ASTU_KEY": "no_key",
                 "FREE_IMAGE_KEY": "no_key",
                 "LENSDUMP_KEY": "no_key",
                 "PTSCREENS_KEY": "no_key",
@@ -630,7 +630,7 @@ class Load:
                 "PTSCREENS_PRIORITY": 0,
                 "LENSDUMP_PRIORITY": 1,
                 "FREE_IMAGE_PRIORITY": 2,
-                "IMGBB_PRIORITY": 3,
+                "ASTU_PRIORITY": 3,
                 "IMGFI_PRIORITY": 4,
                 "PASSIMA_PRIORITY": 5,
                 "IMARIDE_PRIORITY": 6,
