@@ -44,8 +44,8 @@ class VideoManager:
             r'\bweb\s?dl\b', r'\b2160p\b', r'\b1080p\b', r'\b720p\b', r'\b480p\b',
             r'\bhevc\b', r'\bx26\d\b', r'\bh26\d\b', r'\b10bit\b', r'\baac\b',
             r'\brepack\b', r'\bproper\b', r'\bremux\b', r'\bbluray\b', r'\bdual\b', 
-            r'\baudio\b', r'\bmulti\b', r'\bast\b', r'\brosum\b', r'\baoc\b',
-            r'\bby\b', r'\bdrmansoob\b', r'\btranslated\b', r'\barabic\b', r'\bdsnp\b',
+            r'\baudio\b', r'\bmulti\b', r'\bast\b', r'\brosum\b', r'\baoc\b', r'\bast\b',
+            r'\bby\b', r'\bdrmansoob\b', r'\btranslated\b', r'\barabic\b', r'\bdsnp\b', r'\bimax\b', r'\bحصري\b', r'\bنادر\b', r'\bnf\b', r'\bFilm\b', r'\bMasrahiat\b',
             r'\bamzn\b', r'\bnf\b', r'\bhdr\d*\b', r'\bdv\b'
         ]
         
@@ -122,7 +122,7 @@ class VideoManager:
         # --- البدء في التصنيف حسب المعرفات (IDs) المطلوبة ---
 
         # مسرحيات (8)
-        if any(word in full_analysis for word in ['مسرحية', 'theater', 'play']): 
+        if any(word in full_analysis for word in ['مسرحية', 'theater', 'play', 'masrahiat']): 
             return 8
 
         # وثائقي (أفلام 9، مسلسلات 20)
@@ -130,7 +130,7 @@ class VideoManager:
             return 9 if is_movie else 20
 
         # الرسوم المتحركة والأنمي
-        is_animation = (16 in genre_ids) or any(t in full_analysis for t in ['animation', 'anime', 'انمي', 'رسوم', 'cartoon', 'كرتون', 'stop motion', 'pixar', 'disney'])
+        is_animation = (16 in genre_ids) or any(t in full_analysis for t in ['animation', 'anime', 'انمي', 'رسوم', 'cartoon', 'كرتون', 'stop motion', 'pixar', 'disney', 'رسوم متحركة'])
         if is_animation:
             # كرتون كلاسيك (قبل 2000): أفلام 21، مسلسلات 14
             if year < 2000:
